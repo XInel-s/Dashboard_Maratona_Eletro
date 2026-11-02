@@ -1,0 +1,120 @@
+:root {
+  --fundo: #eef1f5;
+  --tinta: #0d1b2a;
+  --alerta: #ffd166;
+  --critico: #ff8fa8;
+  --gap: clamp(8px, 0.9vw, 18px);
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: var(--gap);
+  background: var(--fundo);
+  color: var(--tinta);
+  font-family: "Archivo", system-ui, sans-serif;
+  overflow: hidden;
+}
+
+/* barra do topo: escura, com o cronômetro em destaque */
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.8vw 2vw;
+  background: var(--tinta);
+  color: #fff;
+}
+header h1 {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.7em;
+  font-weight: 600;
+  font-size: clamp(14px, 1.5vw, 32px);
+}
+#conexao {
+  width: 0.6em; height: 0.6em; border-radius: 50%;
+  background: #6ee7a0;
+}
+#conexao.erro { background: var(--critico); }
+
+#timer {
+  font-family: "Archivo Black", sans-serif;
+  font-size: clamp(44px, 6.5vw, 150px);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+#timer.atencao { color: var(--alerta); }
+#timer.critico { color: var(--critico); animation: pulsa 1s steps(2, jump-none) infinite; }
+#timer.fim { color: var(--critico); }
+@keyframes pulsa { 50% { opacity: 0.45; } }
+
+/* equipes: blocos de cor sólida, 3 em cima e 2 embaixo */
+main {
+  min-height: 0;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: 1fr 1fr;
+  gap: var(--gap);
+  padding: 0 var(--gap) var(--gap);
+}
+.equipe { grid-column: span 2; }
+.equipe:nth-child(n+4) { grid-column: span 3; }
+
+.equipe {
+  --cor: #7fd6f5;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto 1fr auto;
+  column-gap: 2vw;
+  padding: 1.5vw 2vw;
+  background: var(--cor);
+  border-radius: 6px;
+}
+.equipe .topo {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1em;
+}
+.equipe .nome { margin: 0; font-weight: 700; font-size: clamp(16px, 1.8vw, 38px); }
+.equipe .status {
+  padding: 0.25em 0.8em;
+  border-radius: 99px;
+  background: var(--tinta);
+  color: #fff;
+  font-weight: 600;
+  font-size: clamp(12px, 1.2vw, 26px);
+  white-space: nowrap;
+}
+.equipe .status.concluido { background: #0a7d3b; }
+.equipe .status.travado { background: #c4003f; }
+
+.equipe .nivel {
+  align-self: center;
+  font-family: "Archivo Black", sans-serif;
+  font-size: clamp(80px, 10vw, 230px);
+  line-height: 0.85;
+}
+.equipe .desafio {
+  align-self: center;
+  font-weight: 600;
+  font-size: clamp(20px, 2.2vw, 46px);
+  line-height: 1.15;
+}
+.pips { grid-column: 1 / -1; display: flex; gap: 0.4vw; }
+.pips i { flex: 1; height: 6px; border-radius: 3px; background: rgba(13, 27, 42, 0.22); }
+.pips i.feito { background: var(--tinta); }
+.pips i.atual { background: var(--tinta); opacity: 0.55; }
+
+@media (max-width: 900px) {
+  body { overflow: auto; }
+  main { grid-template-columns: 1fr; grid-template-rows: none; }
+  .equipe, .equipe:nth-child(n+4) { grid-column: auto; }
+}
+@media (prefers-reduced-motion: reduce) { #timer.critico { animation: none; } }
