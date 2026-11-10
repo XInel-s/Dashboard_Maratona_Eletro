@@ -1,4 +1,4 @@
-const API_IP = "10.99.1.19"; // Altere pelo IP da sua máquina se rodar noutro PC ou "localhost"
+const API_IP = "10.99.1.19"; // Altere pelo IP da sua máquina se rodar noutro PC ou "localhost// Altere para "localhost" se estiver no mesmo PC da API ou coloque o IP atual da rede 
 const API_BASE = `http://${API_IP}:8080/api/enigma`;
 const TOTAL_ENIGMAS = 5;
 
@@ -87,7 +87,6 @@ function renderizarEquipes(equipes, container) {
 
         let pipsHtml = "";
         for (let i = 1; i <= TOTAL_ENIGMAS; i++) {
-            // Suporta tanto o formato "1.1", "1.2", "1.3" quanto índices numéricos corridos (1, 2, 3...)
             const sub1Feita = equipe.tarefasConcluidas && (equipe.tarefasConcluidas.includes(`${i}.1`) || equipe.tarefasConcluidas.includes(i * 3 - 2));
             const sub2Feita = equipe.tarefasConcluidas && (equipe.tarefasConcluidas.includes(`${i}.2`) || equipe.tarefasConcluidas.includes(i * 3 - 1));
             const sub3Feita = equipe.tarefasConcluidas && (equipe.tarefasConcluidas.includes(`${i}.3`) || equipe.tarefasConcluidas.includes(i * 3));
@@ -132,6 +131,15 @@ function renderizarEquipes(equipes, container) {
         container.appendChild(divEquipe);
     });
 }
-```[cite: 2]
+
+// --- ARRANQUE E EXECUÇÃO CONTÍNUA ---
+document.addEventListener("DOMContentLoaded", () => {
+    atualizarDashboard();
+    atualizarCronometro();
+
+    // Atualiza o ranking a cada 3 segundos e o cronômetro a cada 1 segundo
+    setInterval(atualizarDashboard, 3000);
+    setInterval(atualizarCronometro, 1000);
+});
 
 Não se esqueça também de incluir a pequena linha `gap: 2px;` no CSS (`dashboard_style.css`) dentro de `.equipe .segs` para que as 3 barrinhas de cada número fiquem separadas visualmente e bonitas[cite: 3].
