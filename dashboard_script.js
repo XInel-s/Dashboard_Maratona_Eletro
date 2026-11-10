@@ -1,5 +1,6 @@
-// Configuração direta da API e do evento
-const API_URL = "http://localhost:8080/api/enigma/dashboard"; // Altere pelo IP se rodar noutro PC
+
+const API_IP = "temqvernahora"; // Coloque o IP da sua máquina
+const API_URL = `http://${API_IP}:8080/api/enigma/dashboard`; // Altere pelo IP se rodar noutro PC
 const TOTAL_ENIGMAS = 5;
 
 async function atualizarDashboard() {
