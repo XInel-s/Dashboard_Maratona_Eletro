@@ -1,0 +1,233 @@
+:root {
+    color-scheme: light;
+
+    --u: 1vh;
+
+    --linhas: 5;
+
+/*cor do BG*/
+    --bg: #ffffff;
+    --surface: #f6f7f9;
+    --border: #d8dbe3;
+    --text: #14161c;
+    --muted: #8b90a0;
+    --destaque: #d400d4;
+    --success: #16a34a;
+    --aviso: #d97706;
+    --perigo: #e11d48;
+
+/* cor das barras */
+    --etapa-1: #EF3B24;
+    --etapa-2: #60B53E;
+    --etapa-3: #F4C522;
+    --etapa-4: #0073B7;
+    --etapa-5: #7a7f87;
+
+/*opacity steps: 0 to 1*/
+    --apagado: 0.3;
+
+/* Font */
+    --font-ui: 'Iosevka Nerd Font', 'Inter', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+
+    --altura-header: calc(var(--u) * 7.4);
+    --espaco: calc(var(--u) * 1.5);
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-ui);
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    flex: none;
+    height: var(--altura-header);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 calc(var(--u) * 3);
+    background: var(--bg);
+    border-bottom: 2px solid var(--border);
+}
+
+header h1 {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    font-size: calc(var(--u) * 2.6);
+    font-weight: 600;
+}
+
+#conexao {
+    width: calc(var(--u) * 1.3);
+    height: calc(var(--u) * 1.3);
+    margin-right: calc(var(--u) * 1.3);
+    border-radius: 50%;
+    background: var(--success);
+}
+
+#conexao.erro {
+    background: var(--perigo);
+}
+
+#timer {
+    font-family: var(--font-mono);
+    font-size: calc(var(--u) * 3.9);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+#timer.atencao {
+    color: var(--aviso);
+}
+
+#timer.critico {
+    color: var(--perigo);
+}
+
+#timer.fim {
+    color: var(--muted);
+}
+
+#equipes {
+    flex: none;
+    height: calc(100vh - var(--altura-header));
+    display: grid;
+    grid-template-rows: repeat(var(--linhas), minmax(0, 1fr));
+    grid-auto-rows: minmax(0, 1fr);
+    gap: var(--espaco);
+    padding: var(--espaco);
+}
+
+.equipe {
+    display: grid;
+    grid-template-columns: minmax(0, auto) minmax(0, 1fr) auto;
+    grid-template-rows: minmax(0, 1fr) auto;
+    grid-template-areas:
+        "nome status desafio"
+        "pips pips pips";
+    align-items: center;
+    column-gap: calc(var(--u) * 2.5);
+    row-gap: calc(var(--u) * 1.2);
+    min-height: 0;
+    padding: calc(var(--u) * 1.6) calc(var(--u) * 2.4);
+    background: var(--surface);
+    border: 2px solid var(--border);
+}
+
+.equipe .topo {
+    display: contents;
+}
+
+.equipe .nome {
+    grid-area: nome;
+    margin: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: calc(var(--u) * 3.2);
+    font-weight: 700;
+    line-height: 1.15;
+}
+
+.equipe .status {
+    display: none;
+}
+
+.equipe .status.concluido {
+    grid-area: status;
+    display: inline-block;
+    justify-self: start;
+    padding: calc(var(--u) * 0.4) calc(var(--u) * 1.4);
+    background: var(--success);
+    color: #ffffff;
+    font-size: calc(var(--u) * 1.8);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+}
+
+.equipe .desafio {
+    grid-area: desafio;
+    justify-self: end;
+    white-space: nowrap;
+    color: var(--destaque);
+    font-size: calc(var(--u) * 3.2);
+    font-variant-numeric: tabular-nums;
+}
+
+.equipe .pips {
+    grid-area: pips;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: calc(var(--u) * 2.2);
+    width: 100%;
+}
+
+.equipe .etapa {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: calc(var(--u) * 0.6);
+}
+
+.equipe .etapa-1 { --cor: var(--etapa-1); }
+.equipe .etapa-2 { --cor: var(--etapa-2); }
+.equipe .etapa-3 { --cor: var(--etapa-3); }
+.equipe .etapa-4 { --cor: var(--etapa-4); }
+.equipe .etapa-5 { --cor: var(--etapa-5); }
+
+.equipe .etapa-num {
+    color: var(--cor);
+    opacity: var(--apagado);
+    font-family: var(--font-mono);
+    font-size: calc(var(--u) * 2.8);
+    font-weight: 700;
+    line-height: 1;
+    transition: opacity 0.3s ease;
+}
+
+.equipe .etapa.completa .etapa-num {
+    opacity: 1;
+}
+
+.equipe .segs {
+    display: flex;
+    width: 100%;
+    height: calc(var(--u) * 1.5);
+    gap: 2px;
+}
+
+.equipe .segs i {
+    flex: 1;
+    display: block;
+    height: 100%;
+    background: var(--cor);
+    opacity: var(--apagado);
+    transition: opacity 0.3s ease;
+}
+
+.equipe .segs i.feito {
+    opacity: 1;
+}
+
+@media (max-width: 600px) {
+    :root {
+        --u: 0.75vh;
+    }
+}
