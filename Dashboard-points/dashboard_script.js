@@ -141,5 +141,3 @@ document.addEventListener("DOMContentLoaded", () => {
     setInterval(atualizarDashboard, 3000);
     setInterval(atualizarCronometro, 1000);
 });
-
-Não se esqueça também de incluir a pequena linha `gap: 2px;` no CSS (`dashboard_style.css`) dentro de `.equipe .segs` para que as 3 barrinhas de cada número fiquem separadas visualmente e bonitas[cite: 3].
